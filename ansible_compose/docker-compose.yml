@@ -9,7 +9,7 @@ services:
     networks:
       my_network:
         ipv4_address: 172.16.238.10
-    command: [ "tail", "-f", "/dev/null" ]
+    command: tail -f /dev/null
 
   some_server:
     build:
@@ -20,8 +20,7 @@ services:
     networks:
       my_network:
         ipv4_address: 172.16.238.11
-    command: [ "tail", "-f", "/dev/null" ]
-
+    command:  bash -c "/usr/sbin/sshd && tail -f /dev/null"
 
 networks:
     my_network:
