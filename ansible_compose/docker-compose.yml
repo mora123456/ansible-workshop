@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: ansible_client.dockerfile
     image: ansible_workshop/osx_client
-    container_name: ansible_compose
+    container_name: ansible_client
     networks:
       my_network:
         ipv4_address: 172.16.238.10
