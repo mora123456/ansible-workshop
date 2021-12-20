@@ -10,6 +10,8 @@ services:
       my_network:
         ipv4_address: 172.16.238.10
     command: tail -f /dev/null
+    volumes:
+      - "../config/hosts_inventory.ini:/etc/ansible/hosts"
 
   some_server:
     build:
