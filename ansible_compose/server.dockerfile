@@ -2,11 +2,11 @@ FROM sickcodes/docker-osx
 
 USER root
 
-# starting sshd
-RUN passwd -d root && \
-    sed -i 's/#PermitEmptyPasswords/PermitEmptyPasswords/' /etc/ssh/sshd_config && \
-    sed -i '/^PermitEmptyPasswords/s/no/yes/' /etc/ssh/sshd_config && \
-    cd ~/.ssh && ssh-keygen -A
+RUN curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py && sudo python /tmp/get-pip.py
 
-# /etc/ssh/sshd_config
+
+# starting sshd
+RUN passwd -d root
+
+
 ## maybe we want to install docker, postgres etc..

@@ -12,8 +12,9 @@ services:
     command: tail -f /dev/null
     volumes:
       - "../hosts/hosts_inventory.ini:/etc/ansible/hosts"
-      - "../playbooks/:/root/playbooks/"
-      - "../examples/:/root/examples/"
+      - "../playbooks:/root/playbooks/"
+      - "../examples:/root/examples/"
+      - "./client_known_hosts:/root/.ssh/known_hosts"
     working_dir: /root
 
   some_server:
@@ -25,7 +26,11 @@ services:
     networks:
       my_network:
         ipv4_address: 172.16.238.11
+    volumes:
+      - "./server_keys:/etc/ssh"
     command:  bash -c "/usr/sbin/sshd && tail -f /dev/null"
+    working_dir: /root
+
 
 networks:
     my_network:
