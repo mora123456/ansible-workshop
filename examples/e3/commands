@@ -1,0 +1,52 @@
+# roles, vault, tags
+
+ansible-playbook examples/e3/entire_app_playbook.yml -i examples/e3/hosts.yml --list-tasks
+
+# list app tasks
+ansible-playbook examples/e3/entire_app_playbook.yml -i examples/e3/hosts.yml --list-tasks --limit app_servers
+
+# list db tasks
+ansible-playbook examples/e3/entire_app_playbook.yml -i examples/e3/hosts.yml --list-tasks --limit db_servers
+
+
+# fix app role tasks: uncomment vars/main.yml and change to the variables {{}}
+
+----vault
+# fix db create role: change password with ansible vault
+ansible-vault encrypt_string --vault-id dev@vault/my_vault_pass.txt "db_password" 'db_password'
+
+# this saves the secret in the shell history, better option: write to a file + cat + delete, using --stdin-name
+ansible-vault encrypt_string --vault-id dev@vault/my_vault_pass.txt --stdin-name 'db_password'
+
+# if we don't want a tag
+ansible-vault encrypt_string --vault-password-file vault/my_vault_pass.txt --stdin-name 'db_password'
+# let's take the output and place in our vars instead
+--------
+
+#deploy entire
+ansible-playbook examples/e3/entire_app_playbook.yml -i examples/e3/hosts.yml
+
+# db success, app fails, let's debug!
+ansible-playbook examples/e3/entire_app_playbook.yml -i examples/e3/hosts.yml --limit app_servers --list-tasks
+ansible-playbook examples/e3/entire_app_playbook.yml -i examples/e3/hosts.yml --tags app
+
+# we see it's broken, not sure what to do let's debug!
+ANSIBLE_ENABLE_TASK_DEBUGGER=True ansible-playbook examples/e3/entire_app_playbook.yml -i examples/e3/hosts.yml --tags start
+
+p result._result
+p task.args
+task.args['data'] = '{{ db_host }}'
+p task.args
+redo
+
+# and again with tags
+ansible-playbook examples/e3/entire_app_playbook.yml -i examples/e3/hosts.yml --limit app_servers -v --tags alive
+
+-------
+
+# how to create role directory
+ansible-galaxy init momo --role-skeleton examples/e3/roles/app
+
+
+
+

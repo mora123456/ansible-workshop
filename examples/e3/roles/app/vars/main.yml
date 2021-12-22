@@ -1,0 +1,6 @@
+#---
+#requirements:  "/root/examples/e3/app/requirements.txt"
+#script: "/root/examples/e3/app/app.py"
+#url:
+#  path: "http://0.0.0.0:8000"
+#  endpoint: "alive"

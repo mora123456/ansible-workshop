@@ -1,0 +1,15 @@
+---
+#- name: Our first app deployment
+
+#- hosts: db_servers
+#  roles:
+##    - db_init
+#    - db_create
+#  tags:
+#    - db
+
+- hosts: app_servers
+  roles:
+    - role: app
+      tags:
+        - app

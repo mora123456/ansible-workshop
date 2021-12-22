@@ -1,0 +1,9 @@
+# taken from: https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html#resolving-errors-in-the-debugger
+- hosts: localhost
+  debugger: on_failed
+  gather_facts: no
+  vars:
+    var1: value1
+  tasks:
+    - name: Use a wrong variable
+      ansible.builtin.ping: data={{ wrong_var }}

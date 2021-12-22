@@ -1,0 +1,15 @@
+# The purpose of this ex is to get familiar with ansible inventory, basic ad-hoc commands, different modules examples, some warning handling
+
+ansible -m ping -i examples/e1/hosts.yml workshop
+
+ansible -m ping -i examples/e1/hosts.ini remotes
+
+# how do we ignore the interpreter error? 3 fixes yml/ini/cfg
+# handling error "Found both group and host with same name"  -> ": children", Meaning you have to be explicit whether the group will list hosts or groups.
+
+
+ansible remotes -m ansible.builtin.pids -a "name=sshd"
+# we will get an error because psutil is not installed
+ansible -m ansible.builtin.pip -a "name=psutil==5.8.0" -i examples/e1/hosts.yml  remotes
+
+ps aux | grep sshd # in some_server to compare

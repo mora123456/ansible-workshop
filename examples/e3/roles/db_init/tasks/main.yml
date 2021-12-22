@@ -1,0 +1,16 @@
+- name: Start redis server
+  block:
+  - name: Is running
+    shell: "redis-cli --pass {{ db_password }} ping"
+    tags:
+      - alive
+
+  rescue:
+
+  - name: Start redis server
+    shell: "redis-server --protected-mode no --requirepass {{ db_password }} &"
+
+  - name: Is running
+    shell: "redis-cli --pass {{ db_password }} ping"
+    tags:
+      - alive

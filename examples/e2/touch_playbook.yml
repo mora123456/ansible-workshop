@@ -1,0 +1,31 @@
+- name: Touch a server
+  hosts: all
+  vars:
+    personal_note: it's really not that personal...
+#  ignore_unreachable: yes
+
+  tasks:
+
+     - name: Leaving a mark
+       vars:
+         mark_file: /tmp/marked_dir/mark_file
+       ansible.builtin.file:
+         dest: "{{ mark_file }}"
+         state: touch
+         mode: "u+rw"
+
+
+     - name: Creating mark dir
+       vars:
+         mark_dir: /tmp/marked_dir
+       command: "mkdir -p {{ mark_dir }}"
+
+
+     - name: Adding a personal note
+       vars:
+         mark_file: /tmp/marked_dir/mark_file
+       copy:
+         dest: "{{ mark_file }}"
+         content: |
+           I am {{ inventory_hostname }} and this is my personal note:
+           {{ personal_note }}

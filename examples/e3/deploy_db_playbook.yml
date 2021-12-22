@@ -1,0 +1,9 @@
+---
+- name: Deploy db
+
+  hosts: db_servers
+  roles:
+    - db_init
+  tags:
+    - db
+

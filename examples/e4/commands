@@ -1,0 +1,4 @@
+ansible-playbook ../examples/e4/debugger_playbook.yml
+
+
+ANSIBLE_ENABLE_TASK_DEBUGGER=True ansible-playbook ../examples/e4/debugger_playbook.yml

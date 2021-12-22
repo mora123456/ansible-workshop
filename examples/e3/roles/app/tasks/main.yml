@@ -1,0 +1,45 @@
+---
+- name: Install and Deploy
+  block:
+  - name: Pip install
+    ansible.builtin.pip:
+      requirements: /root/examples/e3/app/requirements.txt
+    tags:
+      - install
+      - app
+
+  - name: "Is server up"
+    uri:
+      url: http://0.0.0.0:8000/alive
+      method: GET
+      status_code: 200
+    register: result
+    tags:
+      - alive
+      - start
+
+  rescue:
+  - name: Start app
+    shell: "python /root/examples/e3/app/app.py &"
+    environment:
+      db_host: "{{ db_host }}"
+      db_password: "{{ db_password }}"
+    tags:
+      - start
+    #    no_log: True
+
+  - name: "Is alive"
+    uri:
+      url: http://0.0.0.0:8000/alive
+      method: GET
+      status_code: 200
+    register: result
+    tags:
+      - start
+
+  always:
+  - name: Respose from server
+    ansible.builtin.debug:
+      var: result.json
+    tags:
+      - alive

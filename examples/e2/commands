@@ -1,0 +1,35 @@
+# compare hosts files from e1
+
+# see the playbook structure and hosts
+ansible-playbook examples/e2/touch_playbook.yml -i examples/e2/hosts.yml --list-tasks --list-hosts
+
+
+ansible-playbook examples/e2/touch_playbook.yml -i examples/e2/hosts.yml
+# This will fail.
+# we need to move mkdir to be the first task in our play. move and try again
+
+# only on exiting nodes
+ansible-playbook examples/e2/touch_playbook.yml -i examples/e2/hosts.yml --limit workshop
+cat /tmp/marked_dir/mark_file
+# uncomment ignore_unreachable
+
+# play with verbosity
+ansible-playbook examples/e2/touch_playbook.yml -i examples/e2/hosts.yml -v
+
+
+# now let's move similar variables outside
+# create all.yml and move path variables
+# next remote.yml and move personal_note to it and to local
+# create localhost.yml and move local host data to it
+ansible-playbook examples/e2/touch_playbook.yml -i examples/e2/hosts.yml
+
+# some_server will fail because of the name of the yml. fix it and try again
+
+
+cat /tmp/marked_dir/mark_file
+
+
+--------
+
+# a quick example of blocks as try/except/finally
+ansible-playbook examples/e2/block_playbook.yml -i examples/e2/hosts.yml --list-tasks
