@@ -9,7 +9,7 @@ Run entire block:
 ```
 git clone https://github.com/mora123456/ansible-workshop.git && \
 cd ansible-workshop && \
-chmod 0600 ansible_compose/ssh_host_* && \
+chmod 0600 ansible_compose/server_keys/ssh_host_* && \
 docker-compose -f ansible_compose/docker-compose.yml build --force-rm
 ```
 
