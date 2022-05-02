@@ -3,9 +3,9 @@
 
 ## Prerequisite:
 [Install ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
-Install docker
 
-Run entire block:
+[Install docker](https://docs.docker.com/get-docker/)
+
 
 ```
 git clone https://github.com/mora123456/ansible-workshop.git && \
@@ -17,19 +17,18 @@ docker-compose -f ansible_compose/docker-compose.yml build --force-rm
 Open project in pycharm
 
 
-## Start containers:
-Run each line separately:
+## Run containers:
 
-```
-docker-compose -f ansible_compose/docker-compose.yml up -d
-docker ps -a  # make sure we have 2 running containers
-docker exec -it ansible_client bash
-# open a second terminal tab (shift + ctrl + d)
-docker exec -it some_server bash
-```
+1. Start both containers: `docker-compose -f ansible_compose/docker-compose.yml up -d`
+
+2. Make sure we have 2 running containers: `docker ps -a`
+
+3. Open ansible_client shell: `docker exec -it ansible_client bash`
+
+4. In a second terminal tab (shift + ctrl + d) open ansible_server shell: `docker exec -it some_server bash`
+
 
 ## Tear down:
-Run entire block:
 
 ```
 docker-compose -f ansible_compose/docker-compose.yml stop && \
